@@ -36,9 +36,9 @@ A fully-featured Kanban-style task management board built with pure HTML, CSS, a
 ## Screenshots
 
 > Add at least 3 screenshots here:
-![Desktop](screenshots/desktop.jpg)
-![Mobile](screenshots/Mobile.jpg)
-![Model](screenshots/Model.jpg)
+![Desktop](Screenshots/desktop.jpg)
+![Mobile](Screenshots/Mobile.jpg)
+![Model](Screenshots/Model.jpg)
 
 ## Technologies Used
 
