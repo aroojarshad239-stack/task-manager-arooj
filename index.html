@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kanban Task Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dark-mode.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left">
+      <i class="fa-solid fa-table-columns header-logo"></i>
+      <h1 class="header-title">Kanban Board</h1>
+    </div>
+    <div class="header-right">
+      <button class="btn-icon" id="themeToggle" title="Toggle Dark/Light Mode">
+        <i class="fa-solid fa-moon" id="themeIcon"></i>
+      </button>
+      <button class="btn-primary" id="globalAddBtn">
+        <i class="fa-solid fa-plus"></i> Add Task
+      </button>
+    </div>
+  </header>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-label">Total Tasks</span>
+      <span class="stat-value" id="statTotal">0</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">In Progress</span>
+      <span class="stat-value" id="statInProgress">0</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Completed</span>
+      <span class="stat-value" id="statDone">0</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Overdue</span>
+      <span class="stat-value stat-overdue" id="statOverdue">0</span>
+    </div>
+    <div class="stat-item stat-progress-item">
+      <span class="stat-label">Completion</span>
+      <div class="progress-wrap">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressFill"></div>
+        </div>
+        <span class="stat-value" id="statPercent">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <div class="search-wrap">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="searchInput" placeholder="Search tasks..." />
+    </div>
+    <div class="priority-filters">
+      <button class="filter-btn active" data-priority="all">All</button>
+      <button class="filter-btn high" data-priority="high">High</button>
+      <button class="filter-btn medium" data-priority="medium">Medium</button>
+      <button class="filter-btn low" data-priority="low">Low</button>
+    </div>
+    <div class="sort-wrap">
+      <select id="sortSelect">
+        <option value="createdAt">Newest First</option>
+        <option value="dueDate">Due Date</option>
+        <option value="priority">Priority</option>
+      </select>
+    </div>
+    <button class="btn-clear" id="clearFilters">
+      <i class="fa-solid fa-xmark"></i> Clear
+    </button>
+  </div>
+
+  <!-- COLUMN TABS (mobile/tablet) -->
+  <div class="col-tabs" id="colTabs">
+    <button class="col-tab active" data-col="todo">To Do</button>
+    <button class="col-tab" data-col="inprogress">In Progress</button>
+    <button class="col-tab" data-col="done">Done</button>
+  </div>
+
+  <!-- BOARD -->
+  <main class="board" id="board">
+    <!-- TO DO -->
+    <div class="column" id="col-todo" data-column="todo">
+      <div class="column-header">
+        <span class="column-title"><i class="fa-regular fa-circle-dot"></i> To Do</span>
+        <span class="col-count badge" id="count-todo">0</span>
+      </div>
+      <div class="cards-container" id="cards-todo"></div>
+    </div>
+
+    <!-- IN PROGRESS -->
+    <div class="column" id="col-inprogress" data-column="inprogress">
+      <div class="column-header">
+        <span class="column-title"><i class="fa-solid fa-spinner"></i> In Progress</span>
+        <span class="col-count badge" id="count-inprogress">0</span>
+      </div>
+      <div class="cards-container" id="cards-inprogress"></div>
+    </div>
+
+    <!-- DONE -->
+    <div class="column" id="col-done" data-column="done">
+      <div class="column-header">
+        <span class="column-title"><i class="fa-solid fa-circle-check"></i> Done</span>
+        <span class="col-count badge" id="count-done">0</span>
+      </div>
+      <div class="cards-container" id="cards-done"></div>
+    </div>
+  </main>
+
+  <!-- TASK MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="taskModal">
+      <div class="modal-header">
+        <h2 id="modalTitle">Add New Task</h2>
+        <button class="btn-icon modal-close" id="modalClose">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="taskId" />
+
+        <!-- Title -->
+        <div class="form-group">
+          <label for="taskTitle">Title <span class="required">*</span></label>
+          <input type="text" id="taskTitle" placeholder="Enter task title" />
+          <span class="field-error" id="titleError"></span>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+          <label for="taskDesc">Description</label>
+          <textarea id="taskDesc" rows="3" placeholder="Optional description..."></textarea>
+        </div>
+
+        <!-- Priority -->
+        <div class="form-group">
+          <label for="taskPriority">Priority</label>
+          <select id="taskPriority">
+            <option value="high">🔴 High</option>
+            <option value="medium" selected>🟡 Medium</option>
+            <option value="low">🟢 Low</option>
+          </select>
+        </div>
+
+        <!-- Due Date -->
+        <div class="form-group">
+          <label for="taskDueDate">Due Date <span class="required">*</span></label>
+          <input type="date" id="taskDueDate" />
+          <span class="field-error" id="dueDateError"></span>
+        </div>
+
+        <!-- Tags -->
+        <div class="form-group">
+          <label for="tagInput">Tags</label>
+          <div class="tags-input-wrap">
+            <div class="tags-pills" id="tagsPills"></div>
+            <input type="text" id="tagInput" placeholder="Type tag and press Enter" />
+          </div>
+        </div>
+
+        <!-- Column -->
+        <div class="form-group">
+          <label for="taskColumn">Column</label>
+          <select id="taskColumn">
+            <option value="todo">To Do</option>
+            <option value="inprogress">In Progress</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="modalCancel">Cancel</button>
+        <button class="btn-primary" id="modalSave">Add Task</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRM DIALOG -->
+  <div class="modal-overlay" id="confirmOverlay">
+    <div class="modal confirm-modal">
+      <div class="modal-header">
+        <h2>Delete Task?</h2>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete <strong id="confirmTaskName"></strong>? This cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="confirmCancel">Cancel</button>
+        <button class="btn-danger" id="confirmDelete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/board.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

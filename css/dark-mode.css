@@ -1,0 +1,40 @@
+/* ===== DARK MODE OVERRIDES ===== */
+[data-theme="dark"] {
+  --bg-page: #0f0f1a;
+  --bg-header: #0a0a14;
+  --bg-card: #1e1e30;
+  --bg-column: #161626;
+  --bg-modal: #1e1e30;
+  --bg-stats: #16162a;
+  --bg-input: #12121f;
+  --bg-tag: #2d2b6e;
+
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-header: #e2e8f0;
+  --text-tag: #a5b4fc;
+  --text-placeholder: #4b5563;
+
+  --border: #2d2d4a;
+  --border-focus: #818cf8;
+
+  --priority-high-bg: #3b1111;
+  --priority-medium-bg: #3b2a00;
+  --priority-low-bg: #0f3320;
+}
+
+[data-theme="dark"] .filter-btn.active,
+[data-theme="dark"] .filter-btn:hover {
+  background: #1e1e50;
+}
+
+[data-theme="dark"] .column.drag-over {
+  background: #1e1e50;
+  border-color: #818cf8;
+}
+
+[data-theme="dark"] .card-btn:hover { background: #2d2d4a; }
+[data-theme="dark"] .card-btn.delete:hover { background: #3b1111; }
+[data-theme="dark"] .card-btn.move:hover { background: #1e1e50; }
+[data-theme="dark"] .modal-close:hover { background: #2d2d4a !important; }
+[data-theme="dark"] #sortSelect option { background: #1e1e30; }
