@@ -54,11 +54,11 @@ A fully-featured Kanban-style task management board built with pure HTML, CSS, a
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/task-manager-your-name.git
+   git clone https://github.com/aroojarshad239-stack/task-manager-arooj
    ```
 2. Navigate to the project folder:
    ```bash
-   cd task-manager-your-name
+   cd task-manager-arooj
    ```
 3. Open `index.html` in any modern browser — no build step needed.
 4. Or use VS Code Live Server for the best experience.
