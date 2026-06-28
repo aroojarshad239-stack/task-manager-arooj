@@ -1,0 +1,61 @@
+/* ===== ANIMATIONS ===== */
+
+/* Modal open/close */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes slideDown {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-overlay.open { animation: fadeIn 0.2s ease; }
+.modal-overlay.open .modal { animation: slideUp 0.25s ease; }
+
+/* Card appear */
+@keyframes cardAppear {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.task-card { animation: cardAppear 0.2s ease; }
+
+/* Stats update pulse */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+.stat-value.updated { animation: pulse 0.3s ease; }
+
+/* Column tab slide */
+@keyframes tabSlide {
+  from { opacity: 0; transform: translateX(10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.column.active-col { animation: tabSlide 0.2s ease; }
+
+/* Theme transition */
+body { transition: background 0.3s ease, color 0.3s ease; }
+.header, .stats-bar, .filter-bar, .modal, .task-card, .column {
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Drag ghost */
+.task-card.dragging {
+  opacity: 0.35;
+  transform: rotate(2deg);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+/* Overdue shake on load */
+@keyframes shakeOnce {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+.task-card.overdue.shake { animation: shakeOnce 0.35s ease; }
