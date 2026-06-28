@@ -5,7 +5,7 @@ A fully-featured Kanban-style task management board built with pure HTML, CSS, a
 ## Live Demo
 
 > Deploy to GitHub Pages / Netlify / Vercel and paste link here.
-> Example: https://your-name.github.io/task-manager-your-name
+> https://aroojarshad239-stack.github.io/task-manager-arooj/
 
 ## Features
 
